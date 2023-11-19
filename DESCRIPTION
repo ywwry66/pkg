@@ -1,0 +1,12 @@
+Package: pkg
+Title: pkg: Utilities for Managing Packages
+Version: 0.0.0.9000
+Authors@R: 
+    person("Ruiyang", "Wu", , "foo@bar", role = c("aut", "cre"))
+Description: Provides common utilities of a package manager, such as
+    listing all leaf packages/dependencies.
+License: BSD 3-Clause
+Encoding: UTF-8
+Language: en
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
