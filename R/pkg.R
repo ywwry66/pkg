@@ -54,3 +54,23 @@ pkg_leaves <- function() {
   pkg_leaves <- setdiff(pkg_list(), pkg_deps())
   return(pkg_leaves)
 }
+
+##' Purge an installed package and its dependencies
+##'
+##' @title Purge a package
+##' @param pkg The package to be purged
+##' @return The purged package name (invisible)
+##' @author Ruiyang Wu
+##' @export
+pkg_purge <- function(pkg) {
+  leaves <- pkg_leaves()
+  if (!(pkg %in% leaves))
+    stop(paste(pkg, "is not installed or needed by other packages!"))
+  pkgs_to_keep <- setdiff(leaves, pkg)
+  pkgs_to_rm <- pkg
+  while (length(pkgs_to_rm) > 0) {
+    remove.packages(pkgs_to_rm, .libPaths()[1])
+    pkgs_to_rm <- setdiff(pkg_leaves(), pkgs_to_keep)
+  }
+  return(invisible(pkg))
+}
