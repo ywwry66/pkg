@@ -1,6 +1,6 @@
 Package: pkg
 Title: pkg: Utilities for Managing Packages
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R: 
     person("Ruiyang", "Wu", , "foo@bar", role = c("aut", "cre"))
 Description: Provides common utilities of a package manager, such as
