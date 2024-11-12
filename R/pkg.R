@@ -65,7 +65,7 @@ pkg_leaves <- function() {
 pkg_purge <- function(pkg) {
   leaves <- pkg_leaves()
   if (!(pkg %in% leaves))
-    stop(paste(pkg, "is not installed or needed by other packages!"))
+    stop(paste(pkg, "is not installed or is needed by other packages!"))
   pkgs_to_keep <- setdiff(leaves, pkg)
   pkgs_to_rm <- pkg
   while (length(pkgs_to_rm) > 0) {
