@@ -5,7 +5,7 @@
 ##' @author Ruiyang Wu
 ##' @export
 pkg_list <- function() {
-  return(row.names(installed.packages(.libPaths()[1])))
+  return(row.names(utils::installed.packages(.libPaths()[1])))
 }
 
 ##' Get information about a package such as its version, license, etc.
@@ -19,7 +19,7 @@ pkg_list <- function() {
 ##' @author Ruiyang Wu
 ##' @export
 pkg_info <- function(pkg) {
-  installed.packages(.libPaths()[1])[pkg, ]
+  utils::installed.packages(.libPaths()[1])[pkg, ]
 }
 
 ##' List the names of all dependency packages installed.
@@ -28,7 +28,7 @@ pkg_info <- function(pkg) {
 ##' @return A vector consisting of all dependency packages installed.
 ##' @author Ruiyang Wu
 pkg_deps <- function() {
-  pkg_info <- installed.packages(.libPaths()[1])
+  pkg_info <- utils::installed.packages(.libPaths()[1])
   pkg_deps <- c(pkg_info[, "Imports"], pkg_info[, "Depends"],
                 pkg_info[, "LinkingTo"])
   if (length(pkg_deps) == 0) {
@@ -68,7 +68,7 @@ pkg_purge <- function(pkg) {
   pkgs_to_keep <- setdiff(leaves, pkg)
   pkgs_to_rm <- pkg
   while (length(pkgs_to_rm) > 0) {
-    remove.packages(pkgs_to_rm, .libPaths()[1])
+    utils::remove.packages(pkgs_to_rm, .libPaths()[1])
     pkgs_to_rm <- setdiff(pkg_leaves(), pkgs_to_keep)
   }
   return(invisible(pkg))
