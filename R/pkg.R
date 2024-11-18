@@ -96,6 +96,25 @@ pkg_list <- function(user_installed = TRUE,
   return(pkgs)
 }
 
+##' Uninstall packages
+##'
+##' @title Uninstall packages
+##' @param pkgs A vector of packages to be uninstalled.
+##' @return The (invisible) same vector.
+##' @author Ruiyang Wu
+##' @export
+pkg_uninstall <- function(pkgs, ...) {
+  if (missing(pkgs)) stop("argument 'pkgs' is required.")
+  leaves <- pkg_leaves()
+  pkgs_non_leave <- pkgs[which(!(pkgs %in% leaves))]
+  if (length(pkgs_non_leave) > 0)
+    stop(paste(pkgs_non_leave,
+               "is not installed or is needed by other packages!\n"))
+  utils::remove.packages(pkgs, ...)
+  pkg_user_add(pkgs, rm = TRUE)
+  return(invisible(pkgs))
+}
+
 ##' Purge an installed package and its dependencies
 ##'
 ##' @title Purge a package
