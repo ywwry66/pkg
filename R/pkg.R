@@ -38,10 +38,6 @@ pkg_info <- function(pkg) {
 }
 
 ##' List the names of all dependency packages installed.
-##'
-##' @title List all dependency packages
-##' @return A vector consisting of all dependency packages installed.
-##' @author Ruiyang Wu
 pkg_deps <- function() {
   pkg_info <- utils::installed.packages(.libPaths()[1])
   pkg_deps <- c(pkg_info[, "Imports"], pkg_info[, "Depends"],

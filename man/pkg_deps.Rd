@@ -2,16 +2,10 @@
 % Please edit documentation in R/pkg.R
 \name{pkg_deps}
 \alias{pkg_deps}
-\title{List all dependency packages}
+\title{List the names of all dependency packages installed.}
 \usage{
 pkg_deps()
 }
-\value{
-A vector consisting of all dependency packages installed.
-}
 \description{
 List the names of all dependency packages installed.
-}
-\author{
-Ruiyang Wu
 }
