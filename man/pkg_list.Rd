@@ -2,15 +2,23 @@
 % Please edit documentation in R/pkg.R
 \name{pkg_list}
 \alias{pkg_list}
-\title{List all packages}
+\title{List installed packages}
 \usage{
-pkg_list()
+pkg_list(user_installed = TRUE, exclude_recommended = TRUE)
+}
+\arguments{
+\item{user_installed}{A Boolean variable indicating whether only
+user-installed packages are listed. If FALSE, list all installed
+packages.}
+
+\item{include_recommended}{A Boolean variable indicating whether
+"recommended" packages should be excluded from the list.}
 }
 \value{
-A vector consisting of all packages installed.
+A character vector of the requested packages.
 }
 \description{
-List the names of all packages installed.
+List installed packages.
 }
 \author{
 Ruiyang Wu

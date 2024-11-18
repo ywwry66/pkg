@@ -10,14 +10,8 @@ pkg_init <- function() {
     save(pkg_user_installed, file = pkg_local_path)
 }
 
-##' List the names of all packages installed.
-##'
-##' @title List all packages
-##' @return A vector consisting of all packages installed.
-##' @author Ruiyang Wu
-##' @export
-pkg_list <- function() {
-  pkg_init()
+##' List all installed packages.
+pkg_list_all <- function() {
   return(row.names(utils::installed.packages(.libPaths()[1])))
 }
 
@@ -61,7 +55,7 @@ pkg_deps <- function() {
 ##' @author Ruiyang Wu
 ##' @export
 pkg_leaves <- function() {
-  pkg_leaves <- setdiff(pkg_list(), pkg_deps())
+  pkg_leaves <- setdiff(pkg_list_all(), pkg_deps())
   return(pkg_leaves)
 }
 
@@ -69,7 +63,7 @@ pkg_leaves <- function() {
 pkg_user_add <- function(pkgs, rm = FALSE) {
   pkg_local_path <- "~/.R/pkg/pkg.RData"
   load(pkg_local_path)
-  pkg_user_installed <- intersect(pkg_user_installed, pkg_list())
+  pkg_user_installed <- intersect(pkg_user_installed, pkg_list_all())
   pkg_user_installed <-
     if (rm) setdiff(pkg_user_installed, pkgs)
     else union(pkg_user_installed, pkgs)
@@ -78,24 +72,28 @@ pkg_user_add <- function(pkgs, rm = FALSE) {
   return(pkg_user_installed)
 }
 
-##' List all user-installed packages.
+##' List installed packages.
 ##'
-##' @title List all user-installed packages
+##' @title List installed packages
+##' @param user_installed A Boolean variable indicating whether only
+##'   user-installed packages are listed. If FALSE, list all installed
+##'   packages.
 ##' @param include_recommended A Boolean variable indicating whether
 ##'   "recommended" packages should be excluded from the list.
-##' @return A vector consisting of all user-installed packages.
+##' @return A character vector of the requested packages.
 ##' @author Ruiyang Wu
 ##' @export
-pkg_list_user <- function(exclude_recommended = TRUE) {
+pkg_list <- function(user_installed = TRUE,
+                     exclude_recommended = TRUE) {
   pkg_init()
-  pkg_user_installed <- pkg_user_add(NULL)
+  pkgs <- if (user_installed) pkg_user_add(NULL) else pkg_list_all()
   if (exclude_recommended) {
     pkg_info <- utils::installed.packages(.libPaths()[1])
     recommended <-
       row.names(pkg_info)[which(pkg_info[, "Priority"] == "recommended")]
-    pkg_user_installed <- setdiff(pkg_user_installed, recommended)
+    pkgs <- setdiff(pkgs, recommended)
   }
-  return(pkg_user_installed)
+  return(pkgs)
 }
 
 ##' Purge an installed package and its dependencies
