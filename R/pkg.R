@@ -1,3 +1,15 @@
+##' Initialization
+pkg_init <- function() {
+  pkg_user_installed <- character(0)
+
+  pkg_local_path <- "~/.R/pkg/pkg.RData"
+  pkg_dir_path <- dirname(pkg_local_path)
+  if (!dir.exists(pkg_dir_path))
+    dir.create(pkg_dir_path, recursive = TRUE)
+  if (!file.exists(pkg_local_path))
+    save(pkg_user_installed, file = pkg_local_path)
+}
+
 ##' List the names of all packages installed.
 ##'
 ##' @title List all packages
@@ -5,6 +17,7 @@
 ##' @author Ruiyang Wu
 ##' @export
 pkg_list <- function() {
+  pkg_init()
   return(row.names(utils::installed.packages(.libPaths()[1])))
 }
 
@@ -19,6 +32,7 @@ pkg_list <- function() {
 ##' @author Ruiyang Wu
 ##' @export
 pkg_info <- function(pkg) {
+  pkg_init()
   utils::installed.packages(.libPaths()[1])[pkg, ]
 }
 
