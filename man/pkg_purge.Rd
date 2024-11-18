@@ -7,10 +7,10 @@
 pkg_purge(pkg)
 }
 \arguments{
-\item{pkg}{The package to be purged}
+\item{pkg}{The package to be purged.}
 }
 \value{
-The purged package name (invisible)
+The purged package name (invisible).
 }
 \description{
 Purge an installed package and its dependencies

@@ -103,8 +103,8 @@ pkg_list_user <- function(exclude_recommended = TRUE) {
 ##' Purge an installed package and its dependencies
 ##'
 ##' @title Purge a package
-##' @param pkg The package to be purged
-##' @return The purged package name (invisible)
+##' @param pkg The package to be purged.
+##' @return The purged package name (invisible).
 ##' @author Ruiyang Wu
 ##' @export
 pkg_purge <- function(pkg) {
@@ -125,9 +125,9 @@ pkg_purge <- function(pkg) {
 ##' Install packages
 ##'
 ##' @title Install packages
-##' @param pkgs A vector of packages to be installed
+##' @param pkgs A vector of packages to be installed.
 ##' @return A vector containing packages user requests to install
-##'   (invisible)
+##'   (invisible).
 ##' @author Ruiyang Wu
 ##' @export
 pkg_install <- function(pkgs, ...) {

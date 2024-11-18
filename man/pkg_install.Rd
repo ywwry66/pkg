@@ -7,11 +7,11 @@
 pkg_install(pkgs, ...)
 }
 \arguments{
-\item{pkgs}{A vector of packages to be installed}
+\item{pkgs}{A vector of packages to be installed.}
 }
 \value{
 A vector containing packages user requests to install
-(invisible)
+(invisible).
 }
 \description{
 Install packages
