@@ -68,6 +68,27 @@ pkg_leaves <- function() {
   return(pkg_leaves)
 }
 
+##' Add additional packages to user-installed packages.
+pkg_user_add <- function(pkgs) {
+  pkg_local_path <- "~/.R/pkg/pkg.RData"
+  load(pkg_local_path)
+  pkg_user_installed <- intersect(pkg_user_installed, pkg_list())
+  pkg_user_installed <- union(pkg_user_installed, pkgs)
+  save(pkg_user_installed, file = pkg_local_path)
+  return(pkg_user_installed)
+}
+
+##' List all user-installed packages.
+##'
+##' @title List all user-installed packages
+##' @return A vector consisting of all user-installed packages.
+##' @author Ruiyang Wu
+##' @export
+pkg_list_user <- function() {
+  pkg_init()
+  return(pkg_user_add(NULL))
+}
+
 ##' Purge an installed package and its dependencies
 ##'
 ##' @title Purge a package
