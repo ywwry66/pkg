@@ -108,3 +108,24 @@ pkg_purge <- function(pkg) {
   }
   return(invisible(pkg))
 }
+
+##' Install packages
+##'
+##' @title Install packages
+##' @param pkgs A vector of packages to be installed
+##' @return A vector containing packages user requests to install
+##'   (invisible)
+##' @author Ruiyang Wu
+##' @export
+pkg_install <- function(pkgs, ...) {
+  if (missing(pkgs)) stop("argument 'pkgs' is required.")
+  pkg_init()
+  utils::install.packages(pkgs, ...)
+
+  ## get package names
+  pkgs <- gsub("_[.](zip|tar[.]gz|tar[.]bzip2|tar[.]xz)", "",
+               gsub(.standard_regexps()$valid_package_version, "",
+                    basename(pkgs))) # code from install.packages function
+
+  return(invisible(pkg_user_add(pkgs)))
+}
