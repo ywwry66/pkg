@@ -76,6 +76,7 @@ pkg_user_add <- function(pkgs, rm = FALSE) {
   pkg_user_installed <-
     if (rm) setdiff(pkg_user_installed, pkgs)
     else union(pkg_user_installed, pkgs)
+  pkg_user_installed <- sort(pkg_user_installed)
   save(pkg_user_installed, file = pkg_local_path)
   return(pkg_user_installed)
 }
