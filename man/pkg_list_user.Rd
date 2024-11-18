@@ -4,7 +4,11 @@
 \alias{pkg_list_user}
 \title{List all user-installed packages}
 \usage{
-pkg_list_user()
+pkg_list_user(exclude_recommended = TRUE)
+}
+\arguments{
+\item{include_recommended}{A Boolean variable indicating whether
+"recommended" packages should be excluded from the list.}
 }
 \value{
 A vector consisting of all user-installed packages.

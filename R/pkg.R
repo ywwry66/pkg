@@ -83,12 +83,21 @@ pkg_user_add <- function(pkgs, rm = FALSE) {
 ##' List all user-installed packages.
 ##'
 ##' @title List all user-installed packages
+##' @param include_recommended A Boolean variable indicating whether
+##'   "recommended" packages should be excluded from the list.
 ##' @return A vector consisting of all user-installed packages.
 ##' @author Ruiyang Wu
 ##' @export
-pkg_list_user <- function() {
+pkg_list_user <- function(exclude_recommended = TRUE) {
   pkg_init()
-  return(pkg_user_add(NULL))
+  pkg_user_installed <- pkg_user_add(NULL)
+  if (exclude_recommended) {
+    pkg_info <- utils::installed.packages(.libPaths()[1])
+    recommended <-
+      row.names(pkg_info)[which(pkg_info[, "Priority"] == "recommended")]
+    pkg_user_installed <- setdiff(pkg_user_installed, recommended)
+  }
+  return(pkg_user_installed)
 }
 
 ##' Purge an installed package and its dependencies
