@@ -32,6 +32,7 @@ pkg_list <- function() {
 ##' @author Ruiyang Wu
 ##' @export
 pkg_info <- function(pkg) {
+  if (missing(pkg)) stop("argument 'pkg' is required.")
   pkg_init()
   utils::installed.packages(.libPaths()[1])[pkg, ]
 }
