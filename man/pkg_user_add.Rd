@@ -4,7 +4,7 @@
 \alias{pkg_user_add}
 \title{Add additional packages to user-installed packages.}
 \usage{
-pkg_user_add(pkgs)
+pkg_user_add(pkgs, rm = FALSE)
 }
 \description{
 Add additional packages to user-installed packages.

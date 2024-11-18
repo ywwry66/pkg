@@ -69,11 +69,13 @@ pkg_leaves <- function() {
 }
 
 ##' Add additional packages to user-installed packages.
-pkg_user_add <- function(pkgs) {
+pkg_user_add <- function(pkgs, rm = FALSE) {
   pkg_local_path <- "~/.R/pkg/pkg.RData"
   load(pkg_local_path)
   pkg_user_installed <- intersect(pkg_user_installed, pkg_list())
-  pkg_user_installed <- union(pkg_user_installed, pkgs)
+  pkg_user_installed <-
+    if (rm) setdiff(pkg_user_installed, pkgs)
+    else union(pkg_user_installed, pkgs)
   save(pkg_user_installed, file = pkg_local_path)
   return(pkg_user_installed)
 }
@@ -98,14 +100,16 @@ pkg_list_user <- function() {
 ##' @export
 pkg_purge <- function(pkg) {
   leaves <- pkg_leaves()
+  pkg_user_installed <- pkg_user_add(NULL)
   if (!(pkg %in% leaves))
     stop(paste(pkg, "is not installed or is needed by other packages!"))
-  pkgs_to_keep <- setdiff(leaves, pkg)
+  pkgs_to_keep <- setdiff(union(leaves, pkg_user_installed), pkg)
   pkgs_to_rm <- pkg
   while (length(pkgs_to_rm) > 0) {
     utils::remove.packages(pkgs_to_rm, .libPaths()[1])
     pkgs_to_rm <- setdiff(pkg_leaves(), pkgs_to_keep)
   }
+  pkg_user_add(pkg, rm = TRUE)
   return(invisible(pkg))
 }
 
