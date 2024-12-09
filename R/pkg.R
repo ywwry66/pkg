@@ -12,7 +12,7 @@ pkg_init <- function() {
 
 ##' List all installed packages.
 pkg_list_all <- function() {
-  return(row.names(utils::installed.packages(.libPaths()[1])))
+  return(row.names(utils::installed.packages(.Library.site)))
 }
 
 ##' Get information about a package such as its version, license, etc.
@@ -28,12 +28,12 @@ pkg_list_all <- function() {
 pkg_info <- function(pkg) {
   if (missing(pkg)) stop("argument 'pkg' is required.")
   pkg_init()
-  utils::installed.packages(.libPaths()[1])[pkg, ]
+  utils::installed.packages(.Library.site)[pkg, ]
 }
 
 ##' List the names of all dependency packages installed.
 pkg_deps <- function() {
-  pkg_info <- utils::installed.packages(.libPaths()[1])
+  pkg_info <- utils::installed.packages(.Library.site)
   pkg_deps <- c(pkg_info[, "Imports"], pkg_info[, "Depends"],
                 pkg_info[, "LinkingTo"])
   if (length(pkg_deps) == 0) {
@@ -88,7 +88,7 @@ pkg_list <- function(user_installed = TRUE,
   pkg_init()
   pkgs <- if (user_installed) pkg_user_add(NULL) else pkg_list_all()
   if (exclude_recommended) {
-    pkg_info <- utils::installed.packages(.libPaths()[1])
+    pkg_info <- utils::installed.packages(.Library.site)
     recommended <-
       row.names(pkg_info)[which(pkg_info[, "Priority"] == "recommended")]
     pkgs <- setdiff(pkgs, recommended)
@@ -130,7 +130,7 @@ pkg_purge <- function(pkg) {
   pkgs_to_keep <- setdiff(union(leaves, pkg_user_installed), pkg)
   pkgs_to_rm <- pkg
   while (length(pkgs_to_rm) > 0) {
-    utils::remove.packages(pkgs_to_rm, .libPaths()[1])
+    utils::remove.packages(pkgs_to_rm, .Library.site)
     pkgs_to_rm <- setdiff(pkg_leaves(), pkgs_to_keep)
   }
   pkg_user_add(pkg, rm = TRUE)
