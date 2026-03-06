@@ -2,10 +2,10 @@
 `pkg` provides common utilities of a package manager, such as listing all leaf/dependency packages.
 
 ## Installation
-Install from GitHub using the `devtools` package:
+Install from GitHub using the `remotes` package:
 
 ``` R
-devtools::install_github("ywwry66/pkg")
+remotes::install_github("ywwry66/pkg")
 ```
 
 ## Usage
